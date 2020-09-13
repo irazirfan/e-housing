@@ -18,19 +18,19 @@
     "Price":12500
   },
   {
-    "Id": 3,
+    "Id": 4,
     "Name":"Asian Villa",
     "Type":"House",
     "Price":16000
   },
   {
-    "Id": 3,
+    "Id": 5,
     "Name":"Eastern Palace",
     "Type":"House",
     "Price":12500
   },
   {
-    "Id": 3,
+    "Id": 6,
     "Name":"North Breeze",
     "Type":"House",
     "Price":12500
