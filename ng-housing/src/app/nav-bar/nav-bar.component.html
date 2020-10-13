@@ -31,10 +31,6 @@
           routerLinkActive="active"
           >Login</a>
         </li>
-        <!-- <li *ngIf="loggedIn()" class="nav-item">
-          <a class="nav-link" (click)="onLogout()"
-          >Logout</a>
-        </li> -->
         <div *ngIf="loggedIn()" class="dropdown mr-5" dropdown>
           <a href="#" class="dropdown-toggle text-light" dropdownToggle (click)="false">
               Welcome {{loggedInUser}}
