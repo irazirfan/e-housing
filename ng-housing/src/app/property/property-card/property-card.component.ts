@@ -8,6 +8,7 @@ import { IProperty } from '../IProperty.interface';
 })
 
 export class PropertyCardComponent {
-@Input() property : IProperty
+@Input() property : IProperty;
+@Input() hideIcons: boolean;
 
 }
