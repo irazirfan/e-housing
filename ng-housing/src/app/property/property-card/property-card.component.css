@@ -1,3 +1,8 @@
+.card-body h1 {
+  font-family: fantasy;
+  color: #0069d9;
+}
+
 .card-img-wrapper{
   overflow: hidden;
   position: relative;
@@ -18,6 +23,11 @@
   height: 250px;
 }
 
+.card-img-wrapper:hover .member-icons{
+  bottom: 0;
+  opacity: 1;
+}
+
 .member-icons{
   position: absolute;
   bottom: -10%;
@@ -32,7 +42,7 @@
   transition: all 0.3s ease-in-out;
 }
 
-.card-img-wrapper:hover .member-icons{
-  bottom: 0;
-  opacity: 1;
+.font-highlight {
+  font-style: italic;
+  color: red;
 }
