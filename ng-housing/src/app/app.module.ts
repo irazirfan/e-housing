@@ -23,6 +23,8 @@ import { UserService } from './service/user.service';
 import { AlertifyService } from './service/alertify.service';
 import { AuthService } from './service/auth.service';
 import { PropertyDetailResolverService } from './property/property-detail/property-detail-resolver.service';
+import { FilterPipe } from './Pipes/filter.pipe';
+import { SortPipe } from './Pipes/sort.pipe';
 
 const appRoutes: Routes = [
   {path: '', component: PropertyListComponent},
@@ -44,7 +46,9 @@ const appRoutes: Routes = [
     AddPropertyComponent,
     PropertyDetailComponent,
     UserLoginComponent,
-    UserRegisterComponent
+    UserRegisterComponent,
+    FilterPipe,
+    SortPipe
    ],
   imports: [
     BrowserModule,
