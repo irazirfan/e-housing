@@ -1,4 +1,5 @@
 .vscode/launch.json
 .vscode/tasks.json
+# ng-housing\src\assets\images\house-default.png
 bin
 obj
