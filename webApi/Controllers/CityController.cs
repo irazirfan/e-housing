@@ -1,11 +1,7 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using webApi.Data;
 using webApi.Models;
+using webApi.Data.Repo;
 
 namespace webApi.Controllers
 {
@@ -13,18 +9,17 @@ namespace webApi.Controllers
     [ApiController]
     public class CityController : ControllerBase
     {
-        private readonly DataContext dc;
-        public CityController(DataContext dc)
+        private readonly ICityRepository repo;
+        public CityController(ICityRepository repo)
         {
-            this.dc = dc;
-
+            this.repo = repo;
         }
 
         // GET api/city
         [HttpGet]
         public async Task<IActionResult> GetCities()
         {
-            var cities = await dc.Cities.ToListAsync();
+            var cities = await repo.getCitiesAsync();
             return Ok(cities);
         }
 
@@ -32,18 +27,17 @@ namespace webApi.Controllers
         [HttpPost("post")]
         public async Task<IActionResult> AddCity(City city)
         {
-            await dc.Cities.AddAsync(city);
-            await dc.SaveChangesAsync();
-            return Ok(city);
+            repo.AddCity(city);
+            await repo.SaveAsync();
+            return StatusCode(201);
         }
 
         // POST api/city/delete
         [HttpDelete("delete/{id}")]
         public async Task<IActionResult> DeleteCity(int id)
         {
-            var city = await dc.Cities.FindAsync(id);
-            dc.Cities.Remove(city);
-            await dc.SaveChangesAsync();
+            repo.DeleteCity(id);
+            await repo.SaveAsync();
             return Ok(id);
         }
     }
