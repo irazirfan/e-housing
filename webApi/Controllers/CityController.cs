@@ -4,6 +4,7 @@ using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using webApi.Data;
 using webApi.Models;
 
 namespace webApi.Controllers
