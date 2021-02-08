@@ -11,6 +11,10 @@ namespace webApi.Extensions
     {
         public static void ConfigureExceptionHandler(this IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseMiddleware<ExceptionHandlerMiddleware>();
+        }
+        public static void ConfigureBuiltIinExceptionHandler(this IApplicationBuilder app, IWebHostEnvironment env)
+        {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
