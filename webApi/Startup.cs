@@ -4,10 +4,11 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using webApi.Data;
 using webApi.Helper;
 using webApi.Interfaces;
+using webApi.Extensions;
+using webApi.Middlewares;
 
 namespace webApi
 {
@@ -33,10 +34,9 @@ namespace webApi
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
+            //app.ConfigureExceptionHandler(env);
+
+            app.UseMiddleware<ExceptionMiddleware>();
 
             app.UseRouting();
 
