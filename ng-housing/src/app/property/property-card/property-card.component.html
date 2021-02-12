@@ -14,9 +14,8 @@
   </div>
   <div class="card-body p-1">
     <h1 class="mb-0"> {{property.BHK}} BHK {{property.PType}} </h1>
-
-    in {{property.Name}}
-    <span *ngIf="property.Name">,</span>
+    in
+    <span *ngIf="property.Name">{{property.Name}},</span>
     {{property.City}}
 
     <h6  class="mt-2">{{property.FType}}
