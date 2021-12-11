@@ -6,9 +6,11 @@ using webApi.Dtos;
 using System;
 using AutoMapper;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Authorization;
 
 namespace webApi.Controllers
 {
+    [Authorize]
     public class CityController : BaseController
     {
         private readonly IUnitOfWork uow;
@@ -21,6 +23,8 @@ namespace webApi.Controllers
 
         // GET api/city
         [HttpGet]
+
+        //[AllowAnonymous]
         public async Task<IActionResult> GetCities()
         {
             //throw new UnauthorizedAccessException();
