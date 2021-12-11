@@ -1,6 +1,19 @@
 # E-housing
 
 
+
+
+**To run ng project**
+```ng serve
+```
+
+
+**To run dotnet project**
+```
+dotnet run
+```
+
+
 **To install dotnet ef tool in vscode**
 ```
 dotnet tool install --global dotnet-ef
