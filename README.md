@@ -4,7 +4,8 @@
 
 
 **To run ng project**
-```ng serve
+```
+ng serve
 ```
 
 
