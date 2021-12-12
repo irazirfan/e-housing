@@ -24,7 +24,7 @@ namespace webApi.Controllers
         // GET api/city
         [HttpGet]
 
-        //[AllowAnonymous]
+        [AllowAnonymous]
         public async Task<IActionResult> GetCities()
         {
             //throw new UnauthorizedAccessException();

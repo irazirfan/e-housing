@@ -8,15 +8,18 @@ using System.Text;
 using System.Security.Claims;
 using System;
 using System.IdentityModel.Tokens.Jwt;
+using Microsoft.Extensions.Configuration;
 
 namespace webApi.Controllers
 {
     public class AccountController : BaseController
     {
         private readonly IUnitOfWork uow;
-        public AccountController(IUnitOfWork uow)
+        private readonly IConfiguration configuration;
+        public AccountController(IUnitOfWork uow, IConfiguration configuration)
         {
             this.uow = uow;
+            this.configuration = configuration;   
         }
 
 
@@ -39,8 +42,9 @@ namespace webApi.Controllers
 
         private string CreateJWT(User user)
         {
+            var secretKey = configuration.GetSection("AppSettings:Key").Value;
             var key = new SymmetricSecurityKey(Encoding.UTF8
-                .GetBytes("shhh.. this is my top secret"));
+                .GetBytes(secretKey));
             
             var claims = new Claim[] {
                 new Claim(ClaimTypes.NameIdentifier,user.Username),
@@ -52,7 +56,7 @@ namespace webApi.Controllers
             
             var tokenDescriptor = new SecurityTokenDescriptor {
                 Subject = new ClaimsIdentity(claims),
-                Expires = DateTime.UtcNow.AddMinutes(1),
+                Expires = DateTime.UtcNow.AddDays(7),
                 SigningCredentials = signingCredentials
             };
 
