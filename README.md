@@ -5,6 +5,7 @@
 
 **To run ng project**
 ```
+set NODE_OPTIONS=--openssl-legacy-provider (OpenSSL 3 compatibility issue)
 ng serve
 ```
 

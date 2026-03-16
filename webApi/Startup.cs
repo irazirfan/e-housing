@@ -12,6 +12,8 @@ using webApi.Middlewares;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using System;
+using System.Security.Cryptography;
 
 namespace webApi
 {
@@ -33,7 +35,16 @@ namespace webApi
             services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
-            var secretKey = Configuration.GetSection("AppSettings:Key").Value;
+            //var secretKey = Configuration.GetSection("AppSettings:Key").Value;
+            var secretKey = Configuration["AppSettings:Key"];
+            
+            // generate 16 random bytes
+            byte[] randomBytes = new byte[16];
+            RandomNumberGenerator.Fill(randomBytes);
+
+            // convert to Base64 and append to your key
+            secretKey += Convert.ToBase64String(randomBytes);
+            
             var key = new SymmetricSecurityKey(Encoding.UTF8
                 .GetBytes(secretKey));
                 
