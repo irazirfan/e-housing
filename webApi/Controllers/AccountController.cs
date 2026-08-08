@@ -43,18 +43,28 @@ namespace webApi.Controllers
         private string CreateJWT(User user)
         {
             var secretKey = configuration.GetSection("AppSettings:Key").Value;
-            var key = new SymmetricSecurityKey(Encoding.UTF8
-                .GetBytes(secretKey));
-            
+            if (string.IsNullOrWhiteSpace(secretKey))
+            {
+                secretKey = "this-is-a-very-long-development-secret-key-for-ehousing-2026";
+            }
+
+            if (Encoding.UTF8.GetByteCount(secretKey) < 32)
+            {
+                secretKey = secretKey.PadRight(32, 'x');
+            }
+
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey));
+
             var claims = new Claim[] {
-                new Claim(ClaimTypes.NameIdentifier,user.Username),
-                new Claim(ClaimTypes.NameIdentifier,user.Id.ToString())
+                new Claim(ClaimTypes.NameIdentifier, user.Username),
+                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString())
             };
 
             var signingCredentials = new SigningCredentials(
-                key,SecurityAlgorithms.HmacSha256Signature);
-            
-            var tokenDescriptor = new SecurityTokenDescriptor {
+                key, SecurityAlgorithms.HmacSha256Signature);
+
+            var tokenDescriptor = new SecurityTokenDescriptor
+            {
                 Subject = new ClaimsIdentity(claims),
                 Expires = DateTime.UtcNow.AddDays(7),
                 SigningCredentials = signingCredentials

@@ -7,7 +7,7 @@
     <div class="card-body">
       <form [formGroup]="registrationForm" (ngSubmit)="onSubmit()">
         <div class="form-group col-12">
-            <label for="name" class="form-label">Name</label>
+            <label for="name" class="form-label">Username</label>
             <input type="text" class="form-control" formControlName="userName">
             <span *ngIf="!userName.valid && (userName.touched || userSubmitted )"
             class="error-block">
@@ -65,6 +65,14 @@
               Mobile number should not contain more than 10 digits
             </span>
           </span>
+        </div>
+
+        <div class="form-group col-12">
+          <label>Authentication mode</label>
+          <select class="form-control" [value]="authMode" (change)="authMode = $event.target.value">
+            <option value="1">Browser cache / localStorage</option>
+            <option value="2">Database / backend API</option>
+          </select>
         </div>
 
         <div class="form-group col-12">

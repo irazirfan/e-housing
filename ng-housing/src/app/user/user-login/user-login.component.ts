@@ -10,6 +10,7 @@ import { AuthService } from 'src/app/service/auth.service';
   styleUrls: ['./user-login.component.css']
 })
 export class UserLoginComponent implements OnInit {
+  authMode = '2';
 
   constructor(private authService: AuthService,
               private alertifyService: AlertifyService,
@@ -19,14 +20,21 @@ export class UserLoginComponent implements OnInit {
   }
 
   onLogin(loginForm: NgForm) {
-    const token = this.authService.authUser(loginForm.value);
-    if(token) {
-      localStorage.setItem('token', token.userName);
-      this.alertifyService.success('Login Sucessful!');
-      this.router.navigate(['/']);
-    }
-    else {
-    this.alertifyService.error('Wrong User Id or Password!');
-    }
+    this.authService.authUser(loginForm.value, this.authMode).subscribe((result) => {
+      if (result && (result.token || result.username || result.userName)) {
+        const username = result.username || result.userName || loginForm.value.username || loginForm.value.userName;
+        const token = result.token;
+        if (token) {
+          localStorage.setItem('token', token);
+        }
+        localStorage.setItem('currentUser', username);
+        this.alertifyService.success('Login Sucessful!');
+        this.router.navigate(['/']);
+      } else {
+        this.alertifyService.error('Wrong User Id or Password!');
+      }
+    }, () => {
+      this.alertifyService.error('Wrong User Id or Password!');
+    });
   }
 }

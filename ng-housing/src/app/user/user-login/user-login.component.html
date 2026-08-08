@@ -7,13 +7,21 @@
       <div class="card-body">
         <form #loginForm='ngForm' (ngSubmit)="onLogin(loginForm)">
           <div class="form-group col-12">
-            <label>Name</label>
-            <input class="form-control" required ngModel name="userName">
+            <label>Username</label>
+            <input class="form-control" required ngModel name="username">
           </div>
 
           <div class="form-group col-12">
             <label>Password</label>
             <input class="form-control" required type="password" ngModel name="password">
+          </div>
+
+          <div class="form-group col-12">
+            <label>Authentication mode</label>
+            <select class="form-control" [(ngModel)]="authMode" name="authMode">
+              <option value="1">Browser cache / localStorage</option>
+              <option value="2">Database / backend API</option>
+            </select>
           </div>
 
           <div class="form-group col-12">

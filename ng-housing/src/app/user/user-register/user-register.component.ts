@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 import { User } from 'src/app/model/user';
 import { UserService } from 'src/app/service/user.service';
 import * as alertify from 'alertifyjs';
@@ -15,9 +17,14 @@ export class UserRegisterComponent implements OnInit {
   registrationForm: FormGroup;
   user: User;
   userSubmitted: boolean;
+  authMode = '2';
+  private readonly apiBaseUrl = 'http://localhost:5000/api/account/register';
+
   constructor(private fb: FormBuilder,
               private userService: UserService,
-              private alertify: AlertifyService) { }
+              private alertify: AlertifyService,
+              private http: HttpClient,
+              private router: Router) { }
 
   ngOnInit() {
     this.createRegistrationForm();
@@ -42,11 +49,26 @@ export class UserRegisterComponent implements OnInit {
     console.log(this.registrationForm);
     this.userSubmitted = true;
     if (this.registrationForm.valid) {
-      //this.user = Object.assign(this.user, this.registrationForm.value);
-      this.userService.addUser(this.userData());
-      this.registrationForm.reset();
-      this.userSubmitted = false;
-      this.alertify.success('Registration sucessful');
+      if (this.authMode === '2') {
+        this.http.post(this.apiBaseUrl, {
+          username: this.userName.value,
+          password: this.password.value
+        }).subscribe(() => {
+          this.registrationForm.reset();
+          this.userSubmitted = false;
+          this.alertify.success('Registration sucessful');
+          this.router.navigate(['/user/login']);
+        }, (error) => {
+          const message = error?.error?.ErrorMessage || error?.error?.message || error?.message || 'Registration failed';
+          this.alertify.error(message);
+        });
+      } else {
+        this.userService.addUser(this.userData());
+        this.registrationForm.reset();
+        this.userSubmitted = false;
+        this.alertify.success('Registration sucessful');
+        this.router.navigate(['/user/login']);
+      }
     } else {
       this.alertify.error('Please provide the required fields properly');
     }
