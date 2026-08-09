@@ -26,3 +26,9 @@ dotnet tool install --global dotnet-ef
 ```
 dotnet ef database update
 ```
+
+## Stack Used
+
+Node: 12.22.12
+Angular: 11.2.14
+DotNet: 8.0.0
